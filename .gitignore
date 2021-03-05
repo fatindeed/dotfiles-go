@@ -1,0 +1,5 @@
+data/
+plugins/
+release/
+.env
+config.yml*

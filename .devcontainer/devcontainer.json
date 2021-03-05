@@ -1,0 +1,33 @@
+// See https://aka.ms/vscode-remote/containers for the
+// documentation about the devcontainer.json format
+{
+    // General configurations
+    "name": "dotfiles",
+    "extensions": [
+        "golang.go"
+    ],
+    "settings": {
+        "terminal.integrated.shell.linux": "/bin/zsh",
+        "go.useLanguageServer": true,
+        "go.autocompleteUnimportedPackages": true,
+        "go.gopath": "/go",
+        "go.goroot": "/usr/local/go",
+        "go.toolsGopath": "/go/bin",
+        "go.toolsManagement.checkForUpdates": "off",
+        "files.watcherExclude": {
+            "**/.git/objects/**": true,
+            "**/.git/subtree-cache/**": true,
+            "**/tmp/**": true
+        }
+    },
+    "postCreateCommand": "test -f .devcontainer/init.sh && sudo .devcontainer/init.sh",
+    // Docker Compose configurations
+    "dockerComposeFile": [
+        "docker-compose.yml",
+        "docker-compose.override.yml"
+    ],
+    "service": "app",
+    "workspaceFolder": "/workspace",
+    "remoteUser": "vscode",
+    "shutdownAction": "stopCompose"
+}

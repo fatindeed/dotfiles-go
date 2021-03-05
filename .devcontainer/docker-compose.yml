@@ -1,0 +1,15 @@
+version: '3.4'
+services:
+  app:
+    image: mcr.microsoft.com/vscode/devcontainers/go
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - seccomp:unconfined
+    volumes:
+      # Mounts the project folder to '/workspace'. The target path inside the container
+      # should match what your application expects. In this case, the compose file is
+      # in a sub-folder, so we will mount '..'. We'll then reference this as the
+      # workspaceFolder in '.devcontainer/devcontainer.json' so VS Code starts here.
+      - ..:/workspace
+    command: ["sleep", "infinity"]
