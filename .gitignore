@@ -1,0 +1,6 @@
+data/
+plugins/
+release/
+.env*
+config.yaml*
+docker-compose.override.yml
