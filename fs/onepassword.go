@@ -2,6 +2,7 @@ package fs
 
 import (
 	"fmt"
+	"os"
 	"strings"
 
 	"github.com/1Password/connect-sdk-go/connect"
@@ -79,6 +80,15 @@ func getOnepasswordAdapter() (*onepasswordAdapter, error) {
 	if opInstance != nil {
 		return opInstance, nil
 	}
+
+	if tokenFile, found := os.LookupEnv("OP_CONNECT_TOKEN_FILE"); found {
+		tokenValue, err := os.ReadFile(tokenFile)
+		if err != nil {
+			return nil, err
+		}
+		os.Setenv("OP_CONNECT_TOKEN", strings.Trim(string(tokenValue), "\r\n"))
+	}
+
 	c, err := connect.NewClientFromEnvironment()
 	if err != nil {
 		return nil, err

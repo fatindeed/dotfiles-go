@@ -36,11 +36,11 @@ func Execute(version string) {
 }
 
 func init() {
-	log.SetOutput(os.Stdout)
-	cobra.OnInitialize(initRuntime)
+	cobra.OnInitialize(initCobra)
 }
 
-func initRuntime() {
+func initCobra() {
+	log.SetOutput(os.Stdout)
 	if verbose {
 		log.SetLevel(log.DebugLevel)
 	}

@@ -7,9 +7,9 @@ require (
 	github.com/google/tink/go v1.7.0
 	github.com/joho/godotenv v1.5.1
 	github.com/sabhiram/go-gitignore v0.0.0-20210923224102-525f6e181f06
-	github.com/sirupsen/logrus v1.9.2
+	github.com/sirupsen/logrus v1.9.3
 	github.com/spf13/cobra v1.7.0
-	github.com/spf13/viper v1.15.0
+	github.com/spf13/viper v1.16.0
 )
 
 require (
@@ -39,4 +39,4 @@ require (
 )
 
 // Remove unstable version
-retract [v0.0.1, v0.0.7]
+retract [v0.0.1, v0.0.9]
