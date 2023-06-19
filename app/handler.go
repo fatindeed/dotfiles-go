@@ -6,33 +6,26 @@ import (
 	"github.com/spf13/viper"
 )
 
-var cfgViper *viper.Viper
-
-func init() {
-	cfgViper = viper.New()
-}
-
 func SetConfigFile(cfgFile string) {
 	if cfgFile != "" {
-		cfgViper.SetConfigFile(cfgFile)
+		viper.SetConfigFile(cfgFile)
 	} else {
-		cfgViper.AddConfigPath(".")
-		cfgViper.SetConfigName("config")
-		// cfgViper.SetConfigType("yaml")
+		viper.AddConfigPath(".")
+		viper.SetConfigName("config")
+		// viper.SetConfigType("yaml")
 	}
 }
 
 type handler struct {
 	config config
-	// vault  *vault
 }
 
 func (h *handler) init() error {
 	// Use config file from the flag.
-	if err := cfgViper.ReadInConfig(); err != nil {
+	if err := viper.ReadInConfig(); err != nil {
 		return err
 	}
-	if err := cfgViper.Unmarshal(&h.config); err != nil {
+	if err := viper.Unmarshal(&h.config); err != nil {
 		return err
 	}
 	if h.config.Name != viper.GetString("name") {

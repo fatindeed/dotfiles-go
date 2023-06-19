@@ -11,10 +11,12 @@ type ReadFileFS interface {
 
 func NewFilesystem(scheme string) (ReadFileFS, error) {
 	switch scheme {
+	case "s3":
+		return getS3Adapter()
 	case "op":
 		return getOnepasswordAdapter()
 	case "file":
-		return getLocalFilesystemAdapter()
+		return getLocalStorageAdapter()
 	}
 	return nil, fmt.Errorf("%s not implemented", scheme)
 }

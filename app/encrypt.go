@@ -21,8 +21,9 @@ type Encrypt struct {
 	baseDir   string `mapstructure:"-"`
 	// Configurable fields
 	Template     string
-	KeyPath      string
-	Passphrase   string
+	KeyPath      string `mapstructure:"key_path"`
+	PassPath     string `mapstructure:"pass_path,omitempty"`
+	Passphrase   []byte `mapstructure:",omitempty"`
 	MasterKeyURI string `mapstructure:",omitempty"`
 }
 
@@ -85,7 +86,16 @@ func (e *Encrypt) Init(baseDir string) error {
 		return err
 	}
 	e.AEAD, err = aead.New(kh)
-	return err
+	if err != nil {
+		return err
+	}
+
+	if e.PassPath != "" {
+		e.Passphrase, err = getFileContents(e.PassPath)
+		return err
+	}
+
+	return nil
 }
 
 func (e *Encrypt) EncryptFile(f *os.File, plaintext []byte) ([]byte, error) {
@@ -96,7 +106,7 @@ func (e *Encrypt) EncryptFile(f *os.File, plaintext []byte) ([]byte, error) {
 	if bytes.Equal(contents, plaintext) {
 		return io.ReadAll(f)
 	}
-	return e.Encrypt(plaintext, []byte(e.Passphrase))
+	return e.Encrypt(plaintext, e.Passphrase)
 }
 
 func (e *Encrypt) DecryptFile(f *os.File) ([]byte, error) {
@@ -104,7 +114,7 @@ func (e *Encrypt) DecryptFile(f *os.File) ([]byte, error) {
 	if err != nil || len(ciphertext) == 0 {
 		return ciphertext, err
 	}
-	return e.Decrypt(ciphertext, []byte(e.Passphrase))
+	return e.Decrypt(ciphertext, e.Passphrase)
 }
 
 func (e *Encrypt) Extension() string {

@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"os"
+	"strings"
 
 	"github.com/fatindeed/dotfiles-go/app"
 	log "github.com/sirupsen/logrus"
@@ -48,6 +49,9 @@ func initCobra() {
 	// Setting Overrides
 	viper.Set("name", rootCmd.Use)
 	viper.Set("version", rootCmd.Version)
+	viper.AutomaticEnv()
+	viper.SetEnvPrefix(rootCmd.Use)
+	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
 
 	app.SetConfigFile(cfgFile)
 }
