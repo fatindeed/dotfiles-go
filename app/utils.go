@@ -5,9 +5,6 @@ import (
 	"io"
 	"os"
 	"path/filepath"
-	"strings"
-
-	"github.com/fatindeed/dotfiles-go/fs"
 )
 
 // String utils
@@ -146,17 +143,3 @@ func saveFile(f *os.File, contents []byte) (bool, error) {
 // 	_, err = io.Copy(dst, src)
 // 	return err
 // }
-
-func getFileContents(fileUri string) ([]byte, error) {
-	scheme := "file"
-	name := fileUri
-	if pos := strings.Index(fileUri, "://"); pos >= 0 {
-		scheme = fileUri[0:pos]
-		name = fileUri[pos+3:]
-	}
-	filesystem, err := fs.NewFilesystem(scheme)
-	if err != nil {
-		return nil, err
-	}
-	return filesystem.ReadFile(name)
-}

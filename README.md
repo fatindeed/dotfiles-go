@@ -16,6 +16,17 @@
 
     Example: `file://path/to/file`
 
+-   HCP Vault Secrets
+
+    Example: `hcp://app-name/secret-name`
+
+    Environment Variables:
+
+    - `HCP_CLIENT_ID`
+    - `HCP_CLIENT_SECRET`
+    - `HCP_ORGANIZATION_ID`
+    - `HCP_PROJECT_ID`
+
 -   S3
 
     Example: `s3://bucket/key`
@@ -27,9 +38,9 @@
     - `DOTFILES_S3_ACCESS_KEY_ID`
     - `DOTFILES_S3_SECRET_ACCESS_KEY`
 
--   OnePassword
+<!-- -   OnePassword
 
-    Example: `op://vault/name/prop`
+    Example: `op://vault/name/prop` -->
 
 ## Inspiration
 - [chezmoi](https://github.com/twpayne/chezmoi)
